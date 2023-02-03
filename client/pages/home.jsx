@@ -1,10 +1,14 @@
 import React from 'react';
-import HelloWorld from '../components/hello-world';
+import Header from '../components/header';
+import Footer from '../components/footer';
+import CurrentSpending from '../components/current-spending';
 
 export default function Home(props) {
   return (
-    <div>
-      <HelloWorld />
+    <div className='container'>
+      <Header />
+      <CurrentSpending />
+      <Footer />
     </div>
   );
 }
