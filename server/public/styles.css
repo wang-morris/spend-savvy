@@ -1,0 +1,139 @@
+.container {
+  max-width: 50rem;
+}
+
+.header-banner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background-color: #428cc2;
+  height: 4rem;
+  z-index: -1;
+}
+
+.header-container {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.title {
+  font-size: 1.3rem;
+}
+
+.links {
+  display: flex;
+  width: 12rem;
+  justify-content: space-between;
+}
+
+.links a {
+  color: white;
+}
+
+.links:hover {
+  cursor: pointer;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-banner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  height: 4.5rem;
+  z-index: -1;
+  border-top: 2px solid rgb(205, 202, 202);
+}
+
+.footer-buttons {
+  width: 25rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+}
+
+.footer-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.footer-button:hover {
+  cursor: pointer;
+}
+
+.footer-button p {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: rgb(104, 101, 101);
+}
+
+.fa-solid {
+  font-size: 1.5rem;
+}
+
+.current-spending-view {
+  display: flex;
+  justify-content: center;
+  height: 45vh;
+  background-color: rgb(219, 217, 217);
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
+}
+
+.current-text {
+  padding: 1rem;
+  font-weight: 500;
+  font-size: 1rem;
+  border: none;
+  width: 100%;
+  background-color: transparent;
+  cursor: default;
+}
+
+textarea:focus {
+  outline-color: rgb(239, 232, 232);
+}
+
+@media (max-width: 650px) {
+  .links {
+    display: none;
+  }
+
+  .title {
+    text-align: center;
+  }
+}
+
+@media (min-width: 650px) {
+  .header-container {
+    height: 3.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+  }
+
+  .footer-banner,
+  .footer-buttons {
+    display: none;
+  }
+
+  .current-spending-view {
+    width: 50%;
+  }
+}
