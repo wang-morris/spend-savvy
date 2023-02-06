@@ -2,6 +2,19 @@
   max-width: 50rem;
 }
 
+.section-titles {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1rem;
+  margin-bottom: -1.5rem;
+}
+
+.section-subtitles {
+  font-size: 1rem;
+  font-weight: 500;
+  padding-left: 1rem;
+}
+
 .header-banner {
   position: absolute;
   left: 0;
@@ -86,7 +99,8 @@ footer {
 
 .current-spending-view {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: start;
   height: 45vh;
   background-color: rgb(219, 217, 217);
   width: 100%;
@@ -105,8 +119,25 @@ footer {
   cursor: default;
 }
 
+.snapshot-view {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: 30vh;
+  background-color: rgb(219, 217, 217);
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
+}
+
 textarea:focus {
   outline-color: rgb(239, 232, 232);
+}
+
+.bar-graph-container {
+  width: 100%;
+  height: 70%;
 }
 
 @media (max-width: 650px) {
@@ -133,7 +164,16 @@ textarea:focus {
     display: none;
   }
 
+  .body-sections {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .current-spending-view {
-    width: 50%;
+    width: 49%;
+  }
+
+  .snapshot-view {
+    width: 49%;
   }
 }
