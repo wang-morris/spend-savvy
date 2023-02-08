@@ -8,8 +8,8 @@ export default function Header(props) {
         <div className='title'>Expense Tracker Title</div>
         <div className='links'>
           <a href='#'>Home</a>
-          <a href='#'>Add</a>
-          <a href='#'>Spending</a>
+          <a href='#add'>Add</a>
+          <a href='#spending'>Spending</a>
         </div>
       </div>
     </header>

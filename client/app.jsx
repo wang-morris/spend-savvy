@@ -1,5 +1,8 @@
 import React from 'react';
 import Home from './pages/home';
+import Header from './components/header';
+import Footer from './components/footer';
+import AddView from './pages/add';
 import parseRoute from './lib/parse-route';
 
 export default class App extends React.Component {
@@ -18,7 +21,22 @@ export default class App extends React.Component {
     });
   }
 
+  renderPage() {
+    const { route } = this.state;
+    if (route.path === '') {
+      return <Home />;
+    } else if (route.path === 'add') {
+      return <AddView />;
+    }
+  }
+
   render() {
-    return <Home />;
+    return (
+      <div className='container'>
+        <Header />
+        { this.renderPage() }
+        <Footer />
+      </div>
+    );
   }
 }

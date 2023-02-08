@@ -1,5 +1,5 @@
 import React from 'react';
-import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Bar } from 'recharts';
 
 const data = [
   { month: 'Jan', spending: 2000 },
@@ -23,8 +23,7 @@ export default function BarGraph(props) {
         <XAxis dataKey="month" />
         <YAxis />
         <Tooltip />
-        <Legend />
-        <Bar dataKey="spending" fill="#8884d8" />
+        <Bar dataKey="spending" fill="#8884d8"/>
       </BarChart>
     </ResponsiveContainer>
   );
