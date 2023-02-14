@@ -98,7 +98,7 @@ footer {
   font-size: 1.5rem;
 }
 
-.current-spending-view {
+.two-thirds-card {
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -196,6 +196,38 @@ label {
   background-color: rgb(202, 44, 44);
 }
 
+.month-year-buttons {
+  padding: 0.7rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.month-year-style {
+  border-radius: 2rem;
+  border-style: none;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.active-button {
+  background-color: rgb(97, 188, 142);
+}
+
+.inactive-button {
+  background-color: transparent;
+}
+
+.pie-chart-container {
+  width: 100%;
+}
+
+.pie-chart {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 input,
 select {
   border-radius: 0.2rem;
@@ -231,7 +263,7 @@ select {
     justify-content: space-between;
   }
 
-  .current-spending-view {
+  .two-thirds-card {
     width: 49%;
   }
 
