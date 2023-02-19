@@ -5,8 +5,7 @@ export default class AddExpense extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      entryId: 3,
-      typeId: '',
+      typeId: 'default',
       userId: 1,
       item: '',
       amount: '',
@@ -31,7 +30,8 @@ export default class AddExpense extends React.Component {
       Housing: 5,
       Shopping: 6,
       Transportation: 7,
-      Other: 8
+      Other: 8,
+      default: 8
     };
 
     fetch('api/entries', {
@@ -50,7 +50,13 @@ export default class AddExpense extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
-        this.setState({ entryId: this.state.entryId + 1 });
+        this.props.newEntry(data);
+        this.setState({
+          typeId: 'default',
+          item: '',
+          amount: '',
+          createdAt: ''
+        });
       })
       .catch(err => {
         // eslint-disable-next-line no-console
@@ -78,8 +84,8 @@ export default class AddExpense extends React.Component {
           </div>
           <div className='form-item'>
             <label htmlFor='typeId'>Transaction Type</label>
-            <select id='typeId' name='typeId' value={this.state.typeId} onChange={this.handleChange}>
-              <option disabled selected>Select Below</option>
+            <select id='typeId' name='typeId' defaultValue={this.state.typeId} onChange={this.handleChange}>
+              <option disabled value='default'>Select Below</option>
               <option value='Food & Drink'>Food & Drink</option>
               <option value='Entertainment'>Entertainment</option>
               <option value='Bills & Utilities'>Bills & Utilities</option>

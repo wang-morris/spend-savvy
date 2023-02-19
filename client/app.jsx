@@ -10,8 +10,10 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      entries: []
     };
+    this.newEntry = this.newEntry.bind(this);
   }
 
   componentDidMount() {
@@ -22,12 +24,18 @@ export default class App extends React.Component {
     });
   }
 
+  newEntry(entry) {
+    this.setState({
+      entries: [entry, ...this.state.entries]
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home />;
+      return <Home entries={this.state.entries} />;
     } else if (route.path === 'add') {
-      return <AddView />;
+      return <AddView newEntry={this.newEntry} />;
     } else if (route.path === 'spending') {
       return <MonthlyView />;
     }

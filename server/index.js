@@ -32,13 +32,13 @@ app.get('/api/entries', (req, res, next) => {
 });
 
 app.post('/api/entries', (req, res, next) => {
-  const { entryId, typeId, userId, item, amount, createdAt } = req.body;
+  const { typeId, userId, item, amount } = req.body;
   const sql = `
-    insert into "entries" ("entryId", "typeId", "userId", "item", "amount", "createdAt")
-    values ($1, $2, $3, $4, $5, $6)
+    insert into "entries" ("typeId", "userId", "item", "amount")
+    values ($1, $2, $3, $4)
     returning *
   `;
-  const params = [entryId, typeId, userId, item, amount, createdAt];
+  const params = [typeId, userId, item, amount];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);

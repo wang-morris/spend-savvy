@@ -6,7 +6,7 @@ export default function Home(props) {
   return (
     <div className='container'>
       <div className='body-sections'>
-        <CurrentSpending />
+        <CurrentSpending entries={props.entries} />
         <YearlySnapshot />
       </div>
     </div>

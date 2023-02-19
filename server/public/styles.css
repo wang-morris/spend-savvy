@@ -228,6 +228,29 @@ label {
   justify-content: space-between;
 }
 
+.current-spending-table {
+  width: 100%;
+}
+
+.current-card {
+  padding-bottom: 1.5rem;
+}
+
+.list-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-weight: 500;
+}
+
+.list-category {
+  font-size: 0.8rem;
+  margin-top: -0.2rem;
+  color: rgba(13, 13, 13, 0.5);
+}
+
 input,
 select {
   border-radius: 0.2rem;
