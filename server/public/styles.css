@@ -236,6 +236,10 @@ label {
   padding-bottom: 1.5rem;
 }
 
+.empty-table {
+  padding-left: 1rem;
+}
+
 .list-container {
   width: 100%;
   display: flex;

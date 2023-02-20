@@ -13,10 +13,15 @@ export default class AddExpense extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancelClick = this.handleCancelClick.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleCancelClick() {
+    window.location.hash = '#';
   }
 
   handleSubmit(event) {
@@ -57,6 +62,7 @@ export default class AddExpense extends React.Component {
           amount: '',
           createdAt: ''
         });
+        window.location.hash = '#';
       })
       .catch(err => {
         // eslint-disable-next-line no-console
@@ -99,7 +105,7 @@ export default class AddExpense extends React.Component {
         </div>
         <div className='form-footer'>
           <button className='form-buttons confirm' type='submit'>Add Expense</button>
-          <button className='form-buttons deny'>Cancel</button>
+          <button className='form-buttons deny' onClick={this.handleCancelClick}>Cancel</button>
         </div>
       </form>
     );
