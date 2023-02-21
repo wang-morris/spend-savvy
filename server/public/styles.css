@@ -3,6 +3,14 @@
   height: 90vh;
 }
 
+button {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
 .section-titles {
   font-size: 1.1rem;
   font-weight: 700;
@@ -82,10 +90,6 @@ footer {
   flex-direction: column;
   align-items: center;
   font-size: 1rem;
-}
-
-.footer-button:hover {
-  cursor: pointer;
 }
 
 .footer-button p {
@@ -207,7 +211,6 @@ label {
   border-radius: 2rem;
   border-style: none;
   padding: 0.6rem;
-  cursor: pointer;
 }
 
 .active-button {
@@ -229,7 +232,23 @@ label {
 }
 
 .current-spending-table {
-  width: 100%;
+  width: 98%;
+}
+
+.current-spending-body {
+  display: block;
+  overflow-y: auto;
+  max-height: 37vh;
+}
+
+.current-spending-body::-webkit-scrollbar {
+  background-color: rgb(228, 228, 228);
+  width: 3px;
+}
+
+.current-spending-body::-webkit-scrollbar-thumb {
+  background-color: rgb(187, 184, 184);
+  border-radius: 2rem;
 }
 
 .current-card {
@@ -245,7 +264,7 @@ label {
   display: flex;
   justify-content: space-between;
   padding-left: 1rem;
-  padding-right: 1rem;
+  padding-right: 0.3rem;
   font-weight: 500;
 }
 
@@ -259,6 +278,16 @@ input,
 select {
   border-radius: 0.2rem;
   border-style: none;
+}
+
+.edit-button {
+  border-style: none;
+  background-color: rgb(228, 228, 228);
+}
+
+.fa-pen-to-square {
+  font-size: 1rem;
+  color: #428cc2;
 }
 
 @media (max-width: 650px) {

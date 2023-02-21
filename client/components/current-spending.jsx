@@ -24,14 +24,18 @@ export default class CurrentSpending extends React.Component {
               )
             : (
               <table className='current-spending-table'>
-                <tbody>
+                <tbody className='current-spending-body'>
                   {entries.map(entry => {
                     return (
                       <tr className='list-container' key={entry[0].entryId}>
                         <td>{entry[0].item}
                           <div className='list-category'>{typeMap[entry[0].typeId]}</div>
                         </td>
-                        <td>${entry[0].amount}</td>
+                        <td>${entry[0].amount}
+                          <button className='edit-button'>
+                            <i className="fa-solid fa-pen-to-square" />
+                          </button>
+                        </td>
                       </tr>
                     );
                   })}
