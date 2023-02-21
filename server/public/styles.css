@@ -1,5 +1,6 @@
 .container {
   max-width: 50rem;
+  height: 90vh;
 }
 
 .section-titles {
@@ -27,8 +28,8 @@
 .header-container {
   height: 4rem;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   color: white;
 }
 
@@ -97,12 +98,12 @@ footer {
   font-size: 1.5rem;
 }
 
-.current-spending-view {
+.two-thirds-card {
   display: flex;
   flex-direction: column;
   align-items: start;
   height: 45vh;
-  background-color: rgb(219, 217, 217);
+  background-color: rgb(228, 228, 228);
   width: 100%;
   margin-top: 0.8rem;
   border-radius: 3px;
@@ -124,7 +125,7 @@ footer {
   flex-direction: column;
   align-items: start;
   height: 30vh;
-  background-color: rgb(219, 217, 217);
+  background-color: rgb(228, 228, 228);
   width: 100%;
   margin-top: 0.8rem;
   border-radius: 3px;
@@ -138,6 +139,126 @@ textarea:focus {
 .bar-graph-container {
   width: 100%;
   height: 70%;
+}
+
+.add-view {
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  background-color: rgb(228, 228, 228);
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
+}
+
+label {
+  margin-bottom: -0;
+  font-weight: 500;
+}
+
+.form {
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  padding: 2rem;
+}
+
+.form-buttons {
+  height: 2.5rem;
+  width: 12rem;
+  margin: 0.5rem;
+  border-radius: 2rem;
+  border: none;
+  box-shadow: 2px 2px 3px rgba(104, 101, 101, 0.5);
+  color: white;
+}
+
+.confirm {
+  background-color: rgb(51, 170, 51);
+}
+
+.deny {
+  background-color: rgb(202, 44, 44);
+}
+
+.month-year-buttons {
+  padding: 0.7rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.month-year-style {
+  border-radius: 2rem;
+  border-style: none;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.active-button {
+  background-color: rgb(97, 188, 142);
+}
+
+.inactive-button {
+  background-color: transparent;
+}
+
+.pie-chart-container {
+  width: 100%;
+}
+
+.pie-chart {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.current-spending-table {
+  width: 100%;
+}
+
+.current-card {
+  padding-bottom: 1.5rem;
+}
+
+.empty-table {
+  padding-left: 1rem;
+}
+
+.list-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-weight: 500;
+}
+
+.list-category {
+  font-size: 0.8rem;
+  margin-top: -0.2rem;
+  color: rgba(13, 13, 13, 0.5);
+}
+
+input,
+select {
+  border-radius: 0.2rem;
+  border-style: none;
 }
 
 @media (max-width: 650px) {
@@ -169,7 +290,7 @@ textarea:focus {
     justify-content: space-between;
   }
 
-  .current-spending-view {
+  .two-thirds-card {
     width: 49%;
   }
 
