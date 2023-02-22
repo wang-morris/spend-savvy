@@ -1,6 +1,19 @@
 import React from 'react';
 
 export default class CurrentSpending extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editEntryId: ''
+    };
+  }
+
+  editButtonClick(entry) {
+    const id = entry[0].entryId;
+    this.props.updateEditEntry(id);
+    window.location.hash = 'edit';
+  }
+
   render() {
     const entries = this.props.entries;
     const typeMap = {
@@ -32,7 +45,7 @@ export default class CurrentSpending extends React.Component {
                           <div className='list-category'>{typeMap[entry[0].typeId]}</div>
                         </td>
                         <td>${entry[0].amount}
-                          <button className='edit-button'>
+                          <button className='edit-button' onClick={() => this.editButtonClick(entry)}>
                             <i className="fa-solid fa-pen-to-square" />
                           </button>
                         </td>

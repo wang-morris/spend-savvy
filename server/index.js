@@ -46,6 +46,23 @@ app.post('/api/entries', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.put('/api/entries/:entryId', (req, res, next) => {
+  const { typeId, userId, item, amount } = req.body;
+  const entryId = parseInt(req.params.entryId);
+  const sql = `
+    update "entries"
+    set "typeId" = $1, "userId" = $2, "item" = $3, "amount" = $4
+    where "entryId" = $5
+    returning *
+  `;
+  const params = [typeId, userId, item, amount, entryId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

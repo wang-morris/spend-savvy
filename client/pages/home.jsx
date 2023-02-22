@@ -6,7 +6,7 @@ export default function Home(props) {
   return (
     <div className='container'>
       <div className='body-sections'>
-        <CurrentSpending entries={props.entries} />
+        <CurrentSpending entries={props.entries} updateEditEntry={props.updateEditEntryId}/>
         <YearlySnapshot />
       </div>
     </div>
