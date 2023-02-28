@@ -10,7 +10,7 @@ export default class CurrentSpending extends React.Component {
 
   editButtonClick(entry) {
     const id = entry[0].entryId;
-    this.props.updateEditEntry(id);
+    this.props.updateEditEntryId(id);
     window.location.hash = 'edit';
   }
 

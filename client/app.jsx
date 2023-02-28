@@ -17,6 +17,7 @@ export default class App extends React.Component {
     };
     this.newEntry = this.newEntry.bind(this);
     this.updateEditEntryId = this.updateEditEntryId.bind(this);
+    this.updateEditedFrontEnd = this.updateEditedFrontEnd.bind(this);
   }
 
   componentDidMount() {
@@ -38,20 +39,39 @@ export default class App extends React.Component {
     });
   }
 
+  updateEditedFrontEnd(entry) {
+    const updatedEntries = this.state.entries.map(nestedArr => {
+      const updatedNestedArr = nestedArr.map(obj => {
+        if (obj.entryId === entry.entryId) {
+          return entry;
+        } else {
+          return obj;
+        }
+      });
+      return updatedNestedArr;
+    });
+
+    this.setState({
+      entries: updatedEntries
+    }, () => {
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home entries={this.state.entries} updateEditEntryId={this.updateEditEntryId}/>;
+      return <Home entries={this.state.entries} updateEditEntryId={this.updateEditEntryId} />;
     } else if (route.path === 'add') {
       return <AddView newEntry={this.newEntry} />;
     } else if (route.path === 'spending') {
       return <MonthlyView />;
     } else if (route.path === 'edit') {
-      return <EditView editEntryId={this.state.editEntryId} />;
+      return <EditView editEntryId={this.state.editEntryId} updateEditedFrontEnd={this.updateEditedFrontEnd}/>;
     }
   }
 
   render() {
+
     return (
       <div className='container'>
         <Header />

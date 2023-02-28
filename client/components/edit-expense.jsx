@@ -60,6 +60,7 @@ export default class EditExpense extends React.Component {
           amount: '',
           createdAt: ''
         });
+        this.props.updateEditedFrontEnd(data);
         window.location.hash = '#';
       })
       .catch(err => {
@@ -72,7 +73,7 @@ export default class EditExpense extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className='add-view'>
-        <h3 className='section-titles'>Add Expense</h3>
+        <h3 className='section-titles'>Edit Expense</h3>
         <div className='form'>
           <div className='form-item'>
             <label htmlFor='item'>Purchase Item</label>
