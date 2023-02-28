@@ -66,12 +66,11 @@ export default class App extends React.Component {
     } else if (route.path === 'spending') {
       return <MonthlyView />;
     } else if (route.path === 'edit') {
-      return <EditView editEntryId={this.state.editEntryId} updateEditedFrontEnd={this.updateEditedFrontEnd}/>;
+      return <EditView editEntryId={this.state.editEntryId} entry={this.state.entries.map(entryArray => entryArray[0]).find(entry => entry.entryId === this.state.editEntryId)} updateEditedFrontEnd={this.updateEditedFrontEnd}/>;
     }
   }
 
   render() {
-
     return (
       <div className='container'>
         <Header />

@@ -4,11 +4,12 @@ export default class EditExpense extends React.Component {
 
   constructor(props) {
     super(props);
+    const { entry } = props;
     this.state = {
       typeId: 'default',
       userId: 1,
-      item: '',
-      amount: '',
+      item: entry.item,
+      amount: entry.amount,
       createdAt: ''
     };
     this.handleChange = this.handleChange.bind(this);
