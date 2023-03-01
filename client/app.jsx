@@ -3,6 +3,7 @@ import Home from './pages/home';
 import Header from './components/header';
 import Footer from './components/footer';
 import AddView from './pages/add';
+import EditView from './pages/edit';
 import MonthlyView from './components/monthly-view';
 import parseRoute from './lib/parse-route';
 
@@ -11,9 +12,12 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       route: parseRoute(window.location.hash),
-      entries: []
+      entries: [],
+      editEntryId: null
     };
     this.newEntry = this.newEntry.bind(this);
+    this.updateEditEntryId = this.updateEditEntryId.bind(this);
+    this.updateEditedFrontEnd = this.updateEditedFrontEnd.bind(this);
   }
 
   componentDidMount() {
@@ -30,14 +34,39 @@ export default class App extends React.Component {
     });
   }
 
+  updateEditEntryId(id) {
+    this.setState({ editEntryId: parseInt(id) }, () => {
+    });
+  }
+
+  updateEditedFrontEnd(entry) {
+    const updatedEntries = this.state.entries.map(nestedArr => {
+      const updatedNestedArr = nestedArr.map(obj => {
+        if (obj.entryId === entry.entryId) {
+          return entry;
+        } else {
+          return obj;
+        }
+      });
+      return updatedNestedArr;
+    });
+
+    this.setState({
+      entries: updatedEntries
+    }, () => {
+    });
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === '') {
-      return <Home entries={this.state.entries} />;
+      return <Home entries={this.state.entries} updateEditEntryId={this.updateEditEntryId} />;
     } else if (route.path === 'add') {
       return <AddView newEntry={this.newEntry} />;
     } else if (route.path === 'spending') {
       return <MonthlyView />;
+    } else if (route.path === 'edit') {
+      return <EditView editEntryId={this.state.editEntryId} entry={this.state.entries.map(entryArray => entryArray[0]).find(entry => entry.entryId === this.state.editEntryId)} updateEditedFrontEnd={this.updateEditedFrontEnd}/>;
     }
   }
 
