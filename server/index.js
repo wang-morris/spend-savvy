@@ -63,6 +63,25 @@ app.put('/api/entries/:entryId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/entries/:entryId', (req, res, next) => {
+  const entryId = parseInt(req.params.entryId);
+  const sql = `
+    delete from "entries"
+    where "entryId" = $1
+    returning *
+  `;
+  const params = [entryId];
+  db.query(sql, params)
+    .then(result => {
+      if (result.rows.length > 0) {
+        res.status(201).json('Entry deleted');
+      } else {
+        res.status(404).json('no such entry');
+      }
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
