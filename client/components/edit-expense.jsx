@@ -36,6 +36,17 @@ export default class EditExpense extends React.Component {
 
   handleDeleteConfirm(event) {
     event.preventDefault();
+    fetch(`/api/entries/${this.props.editEntryId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        window.location.hash = '#';
+      })
+      .catch(err => {
+        // eslint-disable-next-line no-console
+        console.log('error:', err);
+      });
   }
 
   handleSubmit(event) {
@@ -81,7 +92,6 @@ export default class EditExpense extends React.Component {
         // eslint-disable-next-line no-console
         console.log('error:', err);
       });
-
   }
 
   render() {
@@ -117,7 +127,7 @@ export default class EditExpense extends React.Component {
           </div>
         </div>
         <div className='form-footer'>
-          <button className='form-buttons confirm' type='submit'>Edit Expense</button>
+          <button className='form-buttons confirm' type='submit' onClick={this.handleSubmit}>Edit Expense</button>
           <button className='form-buttons deny' onClick={this.handleDeleteClick}>Delete</button>
         </div>
         {this.state.showModal && (
