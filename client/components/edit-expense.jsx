@@ -41,6 +41,7 @@ export default class EditExpense extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
+        this.props.updateDeletedFrontEnd(this.props.editEntryId);
         window.location.hash = '#';
       })
       .catch(err => {

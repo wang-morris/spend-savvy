@@ -193,11 +193,11 @@ label {
 }
 
 .confirm {
-  background-color: rgb(51, 170, 51);
+  background-color: #428cc2;
 }
 
 .deny {
-  background-color: rgb(202, 44, 44);
+  background-color: rgb(196, 26, 26);
 }
 
 .month-year-buttons {
