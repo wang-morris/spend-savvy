@@ -17,7 +17,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#B0E0E6', '#ADD8E6'
 export default function MonthlyChart() {
   return (
     <PieChart className='pie-chart' width={400} height={400}>
-      <Pie data={data} cx={200} cy={200} outerRadius={80} fill="#8884d8">
+      <Pie data={data} cx="50%" cy="50%" outerRadius={80} fill="#8884d8">
         {
           data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
         }

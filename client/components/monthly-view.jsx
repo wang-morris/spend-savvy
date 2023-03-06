@@ -19,28 +19,32 @@ export default class MonthlyView extends React.Component {
 
   render() {
     return (
-      <div className='two-thirds-card'>
-        <div className='month-year-buttons'>
-          <button
-            className={`section-titles month-year-style ${this.state.monthClicked ? 'active-button' : 'inactive-button'}`}
-            onClick={this.handleMonthClick}
-          >
-            This Month
-          </button>
-          <button
-            className={`section-titles month-year-style ${this.state.monthClicked ? 'inactive-button' : 'active-button'}`}
-            onClick={this.handleYearClick}
-          >
-            This Year
-          </button>
+      <div className='body-sections'>
+        <div className='two-thirds-card'>
+          <div className='month-year-buttons'>
+            <button
+              className={`section-titles month-year-style ${this.state.monthClicked ? 'active-button' : 'inactive-button'}`}
+              onClick={this.handleMonthClick}
+            >
+              This Month
+            </button>
+            <button
+              className={`section-titles month-year-style ${this.state.monthClicked ? 'inactive-button' : 'active-button'}`}
+              onClick={this.handleYearClick}
+            >
+              This Year
+            </button>
+          </div>
+          <div className='top-spending-container'>
+            <div className='section-titles'>
+              (Current Month) Total
+            </div>
+            <div className='section-titles'>
+              $0000
+            </div>
+          </div>
         </div>
-        <div className='pie-chart-container'>
-          <div className='section-titles'>
-            (Current Month) Total
-          </div>
-          <div className='section-titles'>
-            $0000
-          </div>
+        <div className='snapshot-view'>
           <MonthlyChart />
         </div>
       </div>
