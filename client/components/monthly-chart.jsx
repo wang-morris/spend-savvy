@@ -12,12 +12,12 @@ const data = [
   { name: 'Other', value: 100 }
 ];
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#B0E0E6', '#ADD8E6', '#90EE90', '#FF69B4'];
+const COLORS = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 
 export default function MonthlyChart() {
   return (
-    <PieChart className='pie-chart' width={400} height={400}>
-      <Pie data={data} cx="50%" cy="50%" outerRadius={80} fill="#8884d8">
+    <PieChart className='pie-chart' width={320} height={200}>
+      <Pie data={data} cx="50%" cy="50%" outerRadius={60} fill="#8884d8">
         {
           data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
         }

@@ -231,12 +231,23 @@ label {
   width: 100%;
 }
 
+.one-third-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30vh;
+  background-color: rgb(228, 228, 228);
+  width: 100%;
+  margin-top: 0.8rem;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
+}
+
 .monthly-pie-chart {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  height: 30vh;
+  align-items: center;
+  height: 45vh;
   background-color: rgb(228, 228, 228);
   width: 100%;
   margin-top: 0.8rem;
@@ -246,8 +257,10 @@ label {
 
 .pie-chart {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
+  font-size: 0.8rem;
 }
 
 .current-spending-table {
@@ -371,6 +384,16 @@ select {
   color: white;
 }
 
+.category-container {
+  width: 100%;
+}
+
+.category-col-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
 @media (max-width: 650px) {
   .links {
     display: none;
@@ -405,6 +428,10 @@ select {
   }
 
   .snapshot-view {
+    width: 49%;
+  }
+
+  .monthly-pie-chart {
     width: 49%;
   }
 }

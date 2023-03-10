@@ -16,6 +16,18 @@ const app = express();
 
 const jsonMiddleware = express.json();
 
+const typeMap = {
+  'Food & Drink': 1,
+  Entertainment: 2,
+  'Bills & Utilities': 3,
+  Health: 4,
+  Housing: 5,
+  Shopping: 6,
+  Transportation: 7,
+  Other: 8,
+  default: 8
+};
+
 app.use(jsonMiddleware);
 app.use(staticMiddleware);
 
@@ -78,6 +90,38 @@ app.delete('/api/entries/:entryId', (req, res, next) => {
       } else {
         res.status(404).json('no such entry');
       }
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/entries/monthlyTotal', (req, res, next) => {
+  const sql = `
+    SELECT SUM(amount) AS monthlyTotal
+    FROM entries
+    WHERE DATE_TRUNC('month', "entries"."createdAt") = DATE_TRUNC('month', NOW());
+  `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/entries/monthlyCategoryTotals', (req, res, next) => {
+  const sql = `
+    SELECT "typeId", SUM("amount") AS "totalAmount"
+    FROM "entries"
+    WHERE DATE_TRUNC('month', "entries"."createdAt") = DATE_TRUNC('month', NOW())
+    GROUP BY "typeId";
+  `;
+  db.query(sql)
+    .then(result => {
+      const categoryTotals = {};
+      result.rows.forEach(row => {
+        const categoryName = Object.keys(typeMap).find(key => typeMap[key] === row.typeId);
+        categoryTotals[String(categoryName)] = row.totalAmount;
+      });
+      res.status(200).json(categoryTotals);
     })
     .catch(err => next(err));
 });
