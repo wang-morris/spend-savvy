@@ -44,13 +44,13 @@ app.get('/api/entries', (req, res, next) => {
 });
 
 app.post('/api/entries', (req, res, next) => {
-  const { typeId, userId, item, amount } = req.body;
+  const { typeId, userId, item, amount, dateOfExpense } = req.body;
   const sql = `
-    insert into "entries" ("typeId", "userId", "item", "amount")
-    values ($1, $2, $3, $4)
+    insert into "entries" ("typeId", "userId", "item", "amount", "dateOfExpense")
+    values ($1, $2, $3, $4, $5)
     returning *
   `;
-  const params = [typeId, userId, item, amount];
+  const params = [typeId, userId, item, amount, dateOfExpense];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
@@ -98,7 +98,7 @@ app.get('/api/entries/monthlyTotal', (req, res, next) => {
   const sql = `
     SELECT SUM(amount) AS monthlyTotal
     FROM entries
-    WHERE DATE_TRUNC('month', "entries"."createdAt") = DATE_TRUNC('month', NOW());
+    WHERE DATE_TRUNC('month', "entries"."dateOfExpense") = DATE_TRUNC('month', NOW());
   `;
   db.query(sql)
     .then(result => {
@@ -111,7 +111,7 @@ app.get('/api/entries/monthlyCategoryTotals', (req, res, next) => {
   const sql = `
     SELECT "typeId", SUM("amount") AS "totalAmount"
     FROM "entries"
-    WHERE DATE_TRUNC('month', "entries"."createdAt") = DATE_TRUNC('month', NOW())
+    WHERE DATE_TRUNC('month', "entries"."dateOfExpense") = DATE_TRUNC('month', NOW())
     GROUP BY "typeId";
   `;
   db.query(sql)

@@ -11,6 +11,7 @@ CREATE TABLE "entries" (
   "item" TEXT NOT NULL,
   "amount" DECIMAL NOT NULL,
   "createdAt" TIMESTAMPTZ NOT NULL default now(),
+  "dateOfExpense" TIMESTAMPTZ NOT NULL,
   CONSTRAINT "entries_pk" PRIMARY KEY ("entryId")
 ) WITH (
   OIDS=FALSE
