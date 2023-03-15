@@ -50,7 +50,7 @@ export default class AddExpense extends React.Component {
         userId: this.state.userId,
         item: this.state.item,
         amount: this.state.amount,
-        createdAt: this.state.createdAt
+        dateOfExpense: this.state.createdAt
       })
     })
       .then(res => res.json())
@@ -60,7 +60,8 @@ export default class AddExpense extends React.Component {
           typeId: 'default',
           item: '',
           amount: '',
-          createdAt: ''
+          dateOfExpense: '',
+          date: ''
         });
         window.location.hash = '#';
       })
