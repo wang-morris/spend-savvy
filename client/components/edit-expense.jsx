@@ -10,19 +10,44 @@ export default class EditExpense extends React.Component {
       userId: 1,
       item: entry.item,
       amount: entry.amount,
-      createdAt: ''
+      createdAt: '',
+      showModal: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDeleteConfirm = this.handleDeleteConfirm.bind(this);
+    this.handleDeleteCancel = this.handleDeleteCancel.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleDeleteClick() {
-    window.location.hash = '#';
+  handleDeleteClick(event) {
+    event.preventDefault();
+    this.setState({ showModal: true });
+  }
+
+  handleDeleteCancel(event) {
+    event.preventDefault();
+    this.setState({ showModal: false });
+  }
+
+  handleDeleteConfirm(event) {
+    event.preventDefault();
+    fetch(`/api/entries/${this.props.editEntryId}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(data => {
+        this.props.updateDeletedFrontEnd(this.props.editEntryId);
+        window.location.hash = '#';
+      })
+      .catch(err => {
+        // eslint-disable-next-line no-console
+        console.log('error:', err);
+      });
   }
 
   handleSubmit(event) {
@@ -68,7 +93,6 @@ export default class EditExpense extends React.Component {
         // eslint-disable-next-line no-console
         console.log('error:', err);
       });
-
   }
 
   render() {
@@ -104,9 +128,24 @@ export default class EditExpense extends React.Component {
           </div>
         </div>
         <div className='form-footer'>
-          <button className='form-buttons confirm' type='submit'>Edit Expense</button>
+          <button className='form-buttons confirm' type='submit' onClick={this.handleSubmit}>Edit Expense</button>
           <button className='form-buttons deny' onClick={this.handleDeleteClick}>Delete</button>
         </div>
+        {this.state.showModal && (
+          <div className='modal-background'>
+            <div className='modal-container'>
+              <div className='modal-text-container'>
+                <div className='modal-text'>
+                  <p>Are you sure you want to delete this entry?</p>
+                </div>
+                <div className='modal-buttons'>
+                  <button className='modal-button-confirm' onClick={this.handleDeleteCancel}>CANCEL</button>
+                  <button className='modal-button-deny' onClick={this.handleDeleteConfirm}>DELETE</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </form>
     );
   }

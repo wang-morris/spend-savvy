@@ -18,6 +18,7 @@ export default class App extends React.Component {
     this.newEntry = this.newEntry.bind(this);
     this.updateEditEntryId = this.updateEditEntryId.bind(this);
     this.updateEditedFrontEnd = this.updateEditedFrontEnd.bind(this);
+    this.updateDeletedFrontEnd = this.updateDeletedFrontEnd.bind(this);
   }
 
   componentDidMount() {
@@ -53,7 +54,15 @@ export default class App extends React.Component {
 
     this.setState({
       entries: updatedEntries
-    }, () => {
+    });
+  }
+
+  updateDeletedFrontEnd(entryId) {
+    const updatedEntries = this.state.entries.filter(entry => {
+      return entry[0].entryId !== entryId;
+    });
+    this.setState({
+      entries: updatedEntries
     });
   }
 
@@ -66,7 +75,7 @@ export default class App extends React.Component {
     } else if (route.path === 'spending') {
       return <MonthlyView />;
     } else if (route.path === 'edit') {
-      return <EditView editEntryId={this.state.editEntryId} entry={this.state.entries.map(entryArray => entryArray[0]).find(entry => entry.entryId === this.state.editEntryId)} updateEditedFrontEnd={this.updateEditedFrontEnd}/>;
+      return <EditView editEntryId={this.state.editEntryId} entry={this.state.entries.map(entryArray => entryArray[0]).find(entry => entry.entryId === this.state.editEntryId)} updateEditedFrontEnd={this.updateEditedFrontEnd} updateDeletedFrontEnd={this.updateDeletedFrontEnd} />;
     }
   }
 
