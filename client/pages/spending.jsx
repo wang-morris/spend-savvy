@@ -5,7 +5,6 @@ export default function Spending(props) {
   return (
     <div className='container'>
       <MonthlyView />
-      {/* <MonthlyList /> */}
     </div>
   );
 }
