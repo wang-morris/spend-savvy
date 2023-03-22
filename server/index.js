@@ -126,6 +126,38 @@ app.get('/api/entries/monthlyCategoryTotals', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/entries/yearlyTotal', (req, res, next) => {
+  const sql = `
+    SELECT SUM(amount) AS yearlyTotal
+    FROM entries
+    WHERE DATE_TRUNC('year', "entries"."dateOfExpense") = DATE_TRUNC('year', NOW());
+  `;
+  db.query(sql)
+    .then(result => {
+      res.status(200).json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/entries/yearlyCategoryTotals', (req, res, next) => {
+  const sql = `
+    SELECT "typeId", SUM("amount") AS "totalAmount"
+    FROM "entries"
+    WHERE DATE_TRUNC('year', "entries"."dateOfExpense") = DATE_TRUNC('year', NOW())
+    GROUP BY "typeId";
+  `;
+  db.query(sql)
+    .then(result => {
+      const categoryTotals = {};
+      result.rows.forEach(row => {
+        const categoryName = Object.keys(typeMap).find(key => typeMap[key] === row.typeId);
+        categoryTotals[String(categoryName)] = row.totalAmount;
+      });
+      res.status(200).json(categoryTotals);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

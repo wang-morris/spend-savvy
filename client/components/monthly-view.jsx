@@ -6,10 +6,13 @@ export default class MonthlyView extends React.Component {
     this.state = {
       monthClicked: true,
       currentMonth: null,
+      currentYear: null,
       monthlyTotal: 0,
       categoryNames: [],
       categoryTotals: [],
-      categoryPercentages: []
+      categoryPercentages: [],
+      yearlyTotal: 0,
+      yearlyCategoryTotals: []
     };
     this.handleMonthClick = this.handleMonthClick.bind(this);
     this.handleYearClick = this.handleYearClick.bind(this);
@@ -17,7 +20,8 @@ export default class MonthlyView extends React.Component {
 
   componentDidMount() {
     const currentMonth = this.getCurrentMonth();
-    this.setState({ currentMonth });
+    const currentYear = this.getCurrentYear();
+    this.setState({ currentMonth, currentYear });
     fetch('/api/entries/monthlyTotal')
       .then(res => res.json())
       .then(data => {
@@ -30,6 +34,20 @@ export default class MonthlyView extends React.Component {
         const categoryTotals = Object.values(data);
         const categoryPercentages = this.calculateCategoryPercentages(categoryTotals, this.state.monthlyTotal);
         this.setState({ categoryNames, categoryTotals, categoryPercentages });
+      });
+
+    fetch('/api/entries/yearlyTotal')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({ yearlyTotal: parseFloat(data.yearlytotal) });
+        return fetch('/api/entries/yearlyCategoryTotals');
+      })
+      .then(res => res.json())
+      .then(data => {
+        const yearlyCategoryNames = Object.keys(data);
+        const yearlyCategoryTotals = Object.values(data);
+        const yearlyCategoryPercentages = this.calculateCategoryPercentages(yearlyCategoryTotals, this.state.yearlyTotal);
+        this.setState({ yearlyCategoryNames, yearlyCategoryTotals, yearlyCategoryPercentages });
       })
       .catch(err => {
         // eslint-disable-next-line no-console
@@ -42,6 +60,11 @@ export default class MonthlyView extends React.Component {
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const monthIndex = now.getMonth();
     return monthNames[monthIndex];
+  }
+
+  getCurrentYear() {
+    const now = new Date();
+    return now.getFullYear();
   }
 
   handleMonthClick() {
@@ -60,14 +83,22 @@ export default class MonthlyView extends React.Component {
   }
 
   render() {
-    const { currentMonth, monthlyTotal, categoryNames, categoryTotals, categoryPercentages } = this.state;
+    const { currentMonth, currentYear, monthlyTotal, categoryNames, categoryTotals, categoryPercentages, yearlyTotal, yearlyCategoryTotals } = this.state;
+
+    const displayCategoryTotals = this.state.monthClicked ? categoryTotals : Object.values(yearlyCategoryTotals);
+    const displayCategoryPercentages = this.state.monthClicked
+      ? categoryPercentages
+      : this.calculateCategoryPercentages(displayCategoryTotals, yearlyTotal);
+
     const firstFourCategories = categoryNames.slice(0, 4);
     const lastFourCategories = categoryNames.slice(4);
-    const firstFourTotals = categoryTotals.slice(0, 4);
-    const lastFourTotals = categoryTotals.slice(4);
-    const firstFourPercentages = categoryPercentages.slice(0, 4);
-    const lastFourPercentages = categoryPercentages.slice(4);
+    const firstFourTotals = displayCategoryTotals.slice(0, 4);
+    const lastFourTotals = displayCategoryTotals.slice(4);
+    const firstFourPercentages = displayCategoryPercentages.slice(0, 4);
+    const lastFourPercentages = displayCategoryPercentages.slice(4);
+
     const commaMonthlyTotal = isNaN(monthlyTotal) ? '0' : monthlyTotal.toLocaleString(undefined, { useGrouping: true });
+    const commaYearlyTotal = isNaN(yearlyTotal) ? '0' : yearlyTotal.toLocaleString(undefined, { useGrouping: true });
 
     return (
       <div className='body-sections'>
@@ -88,10 +119,10 @@ export default class MonthlyView extends React.Component {
           </div>
           <div className='top-spending-container'>
             <div className='section-titles month-year-total'>
-              {currentMonth} Spending
+              {this.state.monthClicked ? `${currentMonth} Spending` : `${currentYear} Spending`}
             </div>
-            <div className='section-titles big-number'>
-              ${commaMonthlyTotal}
+            <div className='section-titles big-number' key={this.state.monthClicked ? 'month' : 'year'}>
+              ${this.state.monthClicked ? commaMonthlyTotal : commaYearlyTotal}
             </div>
           </div>
         </div>
