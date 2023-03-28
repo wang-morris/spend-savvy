@@ -10,6 +10,7 @@ export default class AddExpense extends React.Component {
       item: '',
       amount: '',
       createdAt: ''
+      // errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +54,15 @@ export default class AddExpense extends React.Component {
         dateOfExpense: this.state.createdAt
       })
     })
-      .then(res => res.json())
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(error => {
+            throw new Error(error.error);
+          });
+        }
+        return response.json();
+      })
+
       .then(data => {
         this.props.newEntry(data);
         this.setState({
@@ -66,6 +75,7 @@ export default class AddExpense extends React.Component {
         window.location.hash = '#';
       })
       .catch(err => {
+        this.setState({ errorMessage: err.message });
         // eslint-disable-next-line no-console
         console.log('error:', err);
       });
@@ -79,7 +89,7 @@ export default class AddExpense extends React.Component {
         <div className='form'>
           <div className='form-item'>
             <label htmlFor='item'>Purchase Item</label>
-            <input type='text' id='item' name='item' value={this.state.item} onChange={this.handleChange} />
+            <input type='text' id='item' name='item' value={this.state.item} onChange={this.handleChange} required />
           </div>
           <div className='form-item'>
             <label htmlFor='amount'>Amount</label>
@@ -87,11 +97,11 @@ export default class AddExpense extends React.Component {
           </div>
           <div className='form-item'>
             <label htmlFor='createdAt'>Date of Expense</label>
-            <input type='datetime-local' id='createdAt' name='createdAt' value={this.state.createdAt} onChange={this.handleChange} />
+            <input type='datetime-local' id='createdAt' name='createdAt' value={this.state.createdAt} onChange={this.handleChange} required />
           </div>
           <div className='form-item'>
             <label htmlFor='typeId'>Transaction Type</label>
-            <select id='typeId' name='typeId' defaultValue={this.state.typeId} onChange={this.handleChange}>
+            <select id='typeId' name='typeId' defaultValue={this.state.typeId} onChange={this.handleChange} required>
               <option disabled value='default'>Select Below</option>
               <option value='Food & Drink'>Food & Drink</option>
               <option value='Entertainment'>Entertainment</option>

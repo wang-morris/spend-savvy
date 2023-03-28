@@ -8,6 +8,10 @@ export default class CurrentSpending extends React.Component {
     };
   }
 
+  static defaultProps = {
+    entries: []
+  };
+
   editButtonClick(entry) {
     const id = entry[0].entryId;
     this.props.updateEditEntryId(id);
@@ -15,7 +19,7 @@ export default class CurrentSpending extends React.Component {
   }
 
   render() {
-    const entries = this.props.entries;
+    const entries = this.props.entries.slice(-50);
     const typeMap = {
       1: 'Food & Drink',
       2: 'Entertainment',
@@ -39,6 +43,9 @@ export default class CurrentSpending extends React.Component {
               <table className='current-spending-table'>
                 <tbody className='current-spending-body'>
                   {entries.map(entry => {
+                    if (!entry || !entry[0]) {
+                      return null;
+                    }
                     return (
                       <tr className='list-container' key={entry[0].entryId}>
                         <td>{entry[0].item}

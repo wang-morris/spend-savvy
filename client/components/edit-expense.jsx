@@ -4,7 +4,7 @@ export default class EditExpense extends React.Component {
 
   constructor(props) {
     super(props);
-    const { entry } = props;
+    const entry = props.entry || { item: '', amount: '' };
     this.state = {
       typeId: 'default',
       userId: 1,
