@@ -62,64 +62,6 @@ export default class MonthlyView extends React.Component {
       });
   }
 
-  // componentDidMount() {
-  //   const currentMonth = this.getCurrentMonth();
-  //   const currentYear = this.getCurrentYear();
-  //   this.setState({ currentMonth, currentYear });
-  //   fetch('/api/entries/monthlyTotal')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       this.setState({ monthlyTotal: parseFloat(data.monthlytotal) });
-  //       return fetch('/api/entries/monthlyCategoryTotals');
-  //     })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       const categoryNames = Object.keys(data);
-  //       const categoryTotals = Object.values(data);
-  //       const categoryPercentages = this.calculateCategoryPercentages(categoryTotals, this.state.monthlyTotal);
-  //       this.setState({ categoryNames, categoryTotals, categoryPercentages });
-  //     });
-
-  //   fetch('/api/entries/yearlyTotal')
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       this.setState({ yearlyTotal: parseFloat(data.yearlytotal) });
-  //       return fetch('/api/entries/yearlyCategoryTotals');
-  //     })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       const mappedYearlyCategoryTotals = this.state.categoryNames.map(categoryName => {
-  //         return data[categoryName] || 0;
-  //       });
-  //       console.log('yearlyCategoryTotals', mappedYearlyCategoryTotals);
-  //       const yearlyCategoryPercentages = this.calculateCategoryPercentages(mappedYearlyCategoryTotals, this.state.yearlyTotal);
-  //       this.setState({ yearlyCategoryTotals: mappedYearlyCategoryTotals, yearlyCategoryPercentages });
-  //     })
-  //     .catch(err => {
-  //       // eslint-disable-next-line no-console
-  //       console.log(err);
-  //     });
-
-  // fetch('/api/entries/yearlyTotal')
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     this.setState({ yearlyTotal: parseFloat(data.yearlytotal) });
-  //     return fetch('/api/entries/yearlyCategoryTotals');
-  //   })
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     const yearlyCategoryNames = Object.keys(data);
-  //     const yearlyCategoryTotals = Object.values(data);
-  //     const yearlyCategoryPercentages = this.calculateCategoryPercentages(yearlyCategoryTotals, this.state.yearlyTotal);
-  //     this.setState({ yearlyCategoryNames, yearlyCategoryTotals, yearlyCategoryPercentages }, () => {
-  //       console.log('State after setting yearlyCategoryTotals:', this.state);
-  //     });
-  //   })
-  //   .catch(err => {
-  //     // eslint-disable-next-line no-console
-  //     console.log(err);
-  //   });
-
   getCurrentMonth() {
     const now = new Date();
     const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
