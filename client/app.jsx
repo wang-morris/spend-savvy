@@ -27,11 +27,23 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     });
+
+    const entries = JSON.parse(localStorage.getItem('entries')) || [];
+    this.setState({ entries });
   }
 
+  updateEntries = newEntries => {
+    this.setState({ entries: newEntries }, () => {
+      localStorage.setItem('entries', JSON.stringify(this.state.entries));
+    });
+  };
+
   newEntry(entry) {
+    const updatedEntries = [entry, ...this.state.entries];
     this.setState({
-      entries: [entry, ...this.state.entries]
+      entries: updatedEntries
+    }, () => {
+      localStorage.setItem('entries', JSON.stringify(updatedEntries));
     });
   }
 
@@ -51,6 +63,7 @@ export default class App extends React.Component {
       });
       return updatedNestedArr;
     });
+    this.updateEntries(updatedEntries);
 
     this.setState({
       entries: updatedEntries
@@ -64,6 +77,7 @@ export default class App extends React.Component {
     this.setState({
       entries: updatedEntries
     });
+    this.updateEntries(updatedEntries);
   }
 
   renderPage() {

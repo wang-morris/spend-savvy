@@ -1,7 +1,7 @@
 require('dotenv/config');
 const express = require('express');
 const staticMiddleware = require('./static-middleware');
-// const ClientError = require('./client-error');
+const ValidationError = require('./validation-error');
 const errorMiddleware = require('./error-middleware');
 const pg = require('pg');
 
@@ -28,6 +28,11 @@ const typeMap = {
   default: 8
 };
 
+function validateAmount(amount) {
+  const regex = /^\d+(\.\d{1,2})?$/;
+  return regex.test(amount);
+}
+
 app.use(jsonMiddleware);
 app.use(staticMiddleware);
 
@@ -45,6 +50,11 @@ app.get('/api/entries', (req, res, next) => {
 
 app.post('/api/entries', (req, res, next) => {
   const { typeId, userId, item, amount, dateOfExpense } = req.body;
+
+  if (!validateAmount(amount)) {
+    throw new ValidationError('Amount must be a whole number or up to two decimal places.');
+  }
+
   const sql = `
     insert into "entries" ("typeId", "userId", "item", "amount", "dateOfExpense")
     values ($1, $2, $3, $4, $5)
@@ -154,6 +164,26 @@ app.get('/api/entries/yearlyCategoryTotals', (req, res, next) => {
         categoryTotals[String(categoryName)] = row.totalAmount;
       });
       res.status(200).json(categoryTotals);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/entries/yearlySnapshot', (req, res, next) => {
+  const sql = `
+    SELECT EXTRACT(YEAR FROM "dateOfExpense") AS "year", EXTRACT(MONTH FROM "dateOfExpense") AS "month", SUM("amount") AS "totalAmount"
+    FROM "entries"
+    WHERE EXTRACT(YEAR FROM "dateOfExpense") = EXTRACT(YEAR FROM NOW())
+    GROUP BY EXTRACT(YEAR FROM "dateOfExpense"), EXTRACT(MONTH FROM "dateOfExpense")
+    ORDER BY EXTRACT(YEAR FROM "dateOfExpense"), EXTRACT(MONTH FROM "dateOfExpense");
+  `;
+  db.query(sql)
+    .then(result => {
+      const yearlySnapshot = result.rows.map(row => ({
+        year: row.year,
+        month: row.month,
+        spending: parseFloat(row.totalAmount)
+      }));
+      res.status(200).json(yearlySnapshot);
     })
     .catch(err => next(err));
 });

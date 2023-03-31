@@ -4,14 +4,15 @@ export default class EditExpense extends React.Component {
 
   constructor(props) {
     super(props);
-    const { entry } = props;
+    const entry = props.entry || { item: '', amount: '' };
     this.state = {
       typeId: 'default',
       userId: 1,
       item: entry.item,
       amount: entry.amount,
       createdAt: '',
-      showModal: false
+      showModal: false,
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -52,6 +53,12 @@ export default class EditExpense extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    const amountRegex = /^\d+(\.\d{1,2})?$/;
+    if (!amountRegex.test(this.state.amount)) {
+      this.setState({ errorMessage: 'Please enter a valid number with up to two decimal places.' });
+      return;
+    }
 
     const typeMap = {
       'Food & Drink': 1,
@@ -102,19 +109,20 @@ export default class EditExpense extends React.Component {
         <div className='form'>
           <div className='form-item'>
             <label htmlFor='item'>Purchase Item</label>
-            <input type='text' id='item' name='item' value={this.state.item} onChange={this.handleChange} />
+            <input type='text' id='item' name='item' value={this.state.item} onChange={this.handleChange} required/>
           </div>
           <div className='form-item'>
             <label htmlFor='amount'>Amount</label>
             <input type='text' id='amount' name='amount' value={this.state.amount} onChange={this.handleChange} placeholder='0.00' required />
+            {this.state.errorMessage && <div className='error-message'>{this.state.errorMessage}</div>}
           </div>
           <div className='form-item'>
             <label htmlFor='createdAt'>Date of Expense</label>
-            <input type='datetime-local' id='createdAt' name='createdAt' value={this.state.createdAt} onChange={this.handleChange} />
+            <input type='datetime-local' id='createdAt' name='createdAt' value={this.state.createdAt} onChange={this.handleChange} required/>
           </div>
           <div className='form-item'>
             <label htmlFor='typeId'>Transaction Type</label>
-            <select id='typeId' name='typeId' defaultValue={this.state.typeId} onChange={this.handleChange}>
+            <select id='typeId' name='typeId' defaultValue={this.state.typeId} onChange={this.handleChange} required>
               <option disabled value='default'>Select Below</option>
               <option value='Food & Drink'>Food & Drink</option>
               <option value='Entertainment'>Entertainment</option>
@@ -128,7 +136,7 @@ export default class EditExpense extends React.Component {
           </div>
         </div>
         <div className='form-footer'>
-          <button className='form-buttons confirm' type='submit' onClick={this.handleSubmit}>Edit Expense</button>
+          <button className='form-buttons confirm' type='submit'>Edit Expense</button>
           <button className='form-buttons deny' onClick={this.handleDeleteClick}>Delete</button>
         </div>
         {this.state.showModal && (

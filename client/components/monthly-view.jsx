@@ -22,32 +22,39 @@ export default class MonthlyView extends React.Component {
     const currentMonth = this.getCurrentMonth();
     const currentYear = this.getCurrentYear();
     this.setState({ currentMonth, currentYear });
-    fetch('/api/entries/monthlyTotal')
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ monthlyTotal: parseFloat(data.monthlytotal) });
-        return fetch('/api/entries/monthlyCategoryTotals');
-      })
-      .then(res => res.json())
-      .then(data => {
-        const categoryNames = Object.keys(data);
-        const categoryTotals = Object.values(data);
-        const categoryPercentages = this.calculateCategoryPercentages(categoryTotals, this.state.monthlyTotal);
-        this.setState({ categoryNames, categoryTotals, categoryPercentages });
-      });
 
-    fetch('/api/entries/yearlyTotal')
-      .then(res => res.json())
-      .then(data => {
-        this.setState({ yearlyTotal: parseFloat(data.yearlytotal) });
-        return fetch('/api/entries/yearlyCategoryTotals');
-      })
-      .then(res => res.json())
-      .then(data => {
-        const yearlyCategoryNames = Object.keys(data);
-        const yearlyCategoryTotals = Object.values(data);
-        const yearlyCategoryPercentages = this.calculateCategoryPercentages(yearlyCategoryTotals, this.state.yearlyTotal);
-        this.setState({ yearlyCategoryNames, yearlyCategoryTotals, yearlyCategoryPercentages });
+    Promise.all([
+      fetch('/api/entries/monthlyTotal')
+        .then(res => res.json()),
+      fetch('/api/entries/monthlyCategoryTotals')
+        .then(res => res.json()),
+      fetch('/api/entries/yearlyTotal')
+        .then(res => res.json()),
+      fetch('/api/entries/yearlyCategoryTotals')
+        .then(res => res.json())
+    ])
+      .then(([monthlyTotalData, monthlyCategoryData, yearlyTotalData, yearlyCategoryData]) => {
+        const monthlyTotal = parseFloat(monthlyTotalData.monthlytotal);
+        const mergedCategories = { ...monthlyCategoryData, ...yearlyCategoryData };
+        const categoryNames = Object.keys(mergedCategories);
+        const categoryTotals = Object.values(monthlyCategoryData);
+        const categoryPercentages = this.calculateCategoryPercentages(categoryTotals, monthlyTotal);
+
+        const yearlyTotal = parseFloat(yearlyTotalData.yearlytotal);
+        const mappedYearlyCategoryTotals = categoryNames.map(categoryName => {
+          return yearlyCategoryData[categoryName] || 0;
+        });
+        const yearlyCategoryPercentages = this.calculateCategoryPercentages(mappedYearlyCategoryTotals, yearlyTotal);
+
+        this.setState({
+          monthlyTotal,
+          categoryNames,
+          categoryTotals,
+          categoryPercentages,
+          yearlyTotal,
+          yearlyCategoryTotals: mappedYearlyCategoryTotals,
+          yearlyCategoryPercentages
+        });
       })
       .catch(err => {
         // eslint-disable-next-line no-console
@@ -79,13 +86,13 @@ export default class MonthlyView extends React.Component {
     if (monthlyTotal === 0) {
       return categoryTotals.map(() => 0);
     }
-    return categoryTotals.map(total => Number(total) / Number(monthlyTotal) * 300);
+    return categoryTotals.map(total => (Number(total) / Number(monthlyTotal) * 100).toFixed(1));
   }
 
   render() {
     const { currentMonth, currentYear, monthlyTotal, categoryNames, categoryTotals, categoryPercentages, yearlyTotal, yearlyCategoryTotals } = this.state;
 
-    const displayCategoryTotals = this.state.monthClicked ? categoryTotals : Object.values(yearlyCategoryTotals);
+    const displayCategoryTotals = this.state.monthClicked ? categoryTotals : yearlyCategoryTotals;
     const displayCategoryPercentages = this.state.monthClicked
       ? categoryPercentages
       : this.calculateCategoryPercentages(displayCategoryTotals, yearlyTotal);
@@ -135,11 +142,11 @@ export default class MonthlyView extends React.Component {
                   <div key={categoryName} className='category-item'>
                     <div className='category-name-container'>
                       <div className='category-name'>{categoryName}</div>
-                      <div className='category-bar' style={{ width: `${firstFourPercentages[index]}%` }} />
+                      <div className='category-total'>
+                        ${firstFourTotals[index]}
+                      </div>
                     </div>
-                    <div className='category-total'>
-                      ${firstFourTotals[index]}
-                    </div>
+                    <div className='percentages'>{firstFourPercentages[index]}%</div>
                   </div>
                 ))}
               </div>
@@ -148,13 +155,11 @@ export default class MonthlyView extends React.Component {
                   <div key={categoryName} className='category-item'>
                     <div className='category-name-container'>
                       <div className='category-name'>{categoryName}</div>
-                      <div className='bar-container'>
-                        <div className='category-bar' style={{ width: `${lastFourPercentages[index]}%` }} />
+                      <div className='category-total'>
+                        ${lastFourTotals[index]}
                       </div>
                     </div>
-                    <div className='category-total'>
-                      ${lastFourTotals[index]}
-                    </div>
+                    <div className='percentages'>{lastFourPercentages[index]}% </div>
                   </div>
                 ))}
               </div>
