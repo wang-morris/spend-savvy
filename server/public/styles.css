@@ -449,6 +449,11 @@ select {
   color: rgb(104, 101, 101);
 }
 
+.error-message {
+  color: rgb(224, 6, 6);
+  font-size: 0.8rem;
+}
+
 @media (max-width: 650px) {
   .links {
     display: none;

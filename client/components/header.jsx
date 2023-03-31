@@ -5,7 +5,7 @@ export default function Header(props) {
     <header>
       <div className='header-banner' />
       <div className='header-container'>
-        <div className='title'>Expense Tracker Title</div>
+        <div className='title'>Spend Savvy</div>
         <div className='links'>
           <a href='#'>Home</a>
           <a href='#add'>Add</a>

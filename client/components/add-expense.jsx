@@ -9,8 +9,8 @@ export default class AddExpense extends React.Component {
       userId: 1,
       item: '',
       amount: '',
-      createdAt: ''
-      // errorMessage: ''
+      createdAt: '',
+      errorMessage: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +27,12 @@ export default class AddExpense extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    const amountRegex = /^\d+(\.\d{1,2})?$/;
+    if (!amountRegex.test(this.state.amount)) {
+      this.setState({ errorMessage: 'Please enter a valid number with up to two decimal places.' });
+      return;
+    }
 
     const typeMap = {
       'Food & Drink': 1,
@@ -94,6 +100,7 @@ export default class AddExpense extends React.Component {
           <div className='form-item'>
             <label htmlFor='amount'>Amount</label>
             <input type='text' id='amount' name='amount' value={this.state.amount} onChange={this.handleChange} placeholder='0.00' required />
+            {this.state.errorMessage && <div className='error-message'>{this.state.errorMessage}</div>}
           </div>
           <div className='form-item'>
             <label htmlFor='createdAt'>Date of Expense</label>
