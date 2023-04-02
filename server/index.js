@@ -4,6 +4,7 @@ const staticMiddleware = require('./static-middleware');
 const ValidationError = require('./validation-error');
 const errorMiddleware = require('./error-middleware');
 const pg = require('pg');
+const path = require('path');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -186,6 +187,12 @@ app.get('/api/entries/yearlySnapshot', (req, res, next) => {
       res.status(200).json(yearlySnapshot);
     })
     .catch(err => next(err));
+});
+
+app.use((req, res) => {
+  res.sendFile('/index.html', {
+    root: path.join(__dirname, 'public')
+  });
 });
 
 app.use(errorMiddleware);
