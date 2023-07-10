@@ -10,7 +10,8 @@ export default class AddExpense extends React.Component {
       item: '',
       amount: '',
       createdAt: '',
-      errorMessage: ''
+      errorMessage: '',
+      isLoading: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +28,8 @@ export default class AddExpense extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+
+    this.setState({ isLoading: true });
 
     const amountRegex = /^\d+(\.\d{1,2})?$/;
     if (!amountRegex.test(this.state.amount)) {
@@ -76,12 +79,13 @@ export default class AddExpense extends React.Component {
           item: '',
           amount: '',
           dateOfExpense: '',
-          date: ''
+          date: '',
+          isLoading: false
         });
         window.location.hash = '#';
       })
       .catch(err => {
-        this.setState({ errorMessage: err.message });
+        this.setState({ errorMessage: err.message, isLoading: false });
         // eslint-disable-next-line no-console
         console.log('error:', err);
       });
@@ -89,6 +93,16 @@ export default class AddExpense extends React.Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <div className="lds-facebook">
+          <div />
+          <div />
+          <div />
+        </div>
+      );
+    }
+
     return (
       <form onSubmit={this.handleSubmit} className='add-view'>
         <h3 className='section-titles'>Add Expense</h3>
