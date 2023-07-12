@@ -11,6 +11,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      offlineError: !navigator.onLine,
       route: parseRoute(window.location.hash),
       entries: [],
       editEntryId: null
@@ -28,9 +29,25 @@ export default class App extends React.Component {
       });
     });
 
+    window.addEventListener('online', this.handleOnline);
+    window.addEventListener('offline', this.handleOffline);
+
     const entries = JSON.parse(localStorage.getItem('entries')) || [];
     this.setState({ entries });
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('online', this.handleOnline);
+    window.removeEventListener('offline', this.handleOffline);
+  }
+
+  handleOffline = () => {
+    this.setState({ offlineError: true });
+  };
+
+  handleOnline = () => {
+    this.setState({ offlineError: false });
+  };
 
   updateEntries = newEntries => {
     this.setState({ entries: newEntries }, () => {
@@ -94,10 +111,19 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { offlineError } = this.state;
+
     return (
       <div className='container'>
         <Header />
-        { this.renderPage() }
+        {offlineError && (
+          <div className='offline-overlay'>
+            <div className='offline-error'>
+              Network is offline. Please check your internet connection and try again.
+            </div>
+          </div>
+        )}
+        {this.renderPage()}
         <Footer />
       </div>
     );

@@ -136,30 +136,46 @@ export default class MonthlyView extends React.Component {
       : (
         <>
           <div className='category-col'>
-            {firstFourCategories.map((categoryName, index) => (
-              <div key={categoryName} className='category-item'>
-                <div className='category-name-container'>
-                  <div className='category-name'>{categoryName}</div>
-                  <div className='category-total'>
-                    ${firstFourTotals[index]}
+            {firstFourCategories.map((categoryName, index) => {
+              const categoryTotal = firstFourTotals[index];
+              const categoryPercentage = firstFourPercentages[index];
+              const isNoEntryForMonth = categoryTotal === undefined;
+
+              return (
+                <div key={categoryName} className='category-item'>
+                  <div className='category-name-container'>
+                    <div className='category-name'>{categoryName}</div>
+                    <div className='category-total'>
+                      {isNoEntryForMonth ? '$0' : `$${categoryTotal}`}
+                    </div>
+                  </div>
+                  <div className='percentages'>
+                    {isNoEntryForMonth ? '0%' : `${categoryPercentage}%`}
                   </div>
                 </div>
-                <div className='percentages'>{firstFourPercentages[index]}%</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className='category-col'>
-            {lastFourCategories.map((categoryName, index) => (
-              <div key={categoryName} className='category-item'>
-                <div className='category-name-container'>
-                  <div className='category-name'>{categoryName}</div>
-                  <div className='category-total'>
-                    ${lastFourTotals[index]}
+            {lastFourCategories.map((categoryName, index) => {
+              const categoryTotal = lastFourTotals[index];
+              const categoryPercentage = lastFourPercentages[index];
+              const isNoEntryForMonth = categoryTotal === undefined;
+
+              return (
+                <div key={categoryName} className='category-item'>
+                  <div className='category-name-container'>
+                    <div className='category-name'>{categoryName}</div>
+                    <div className='category-total'>
+                      {isNoEntryForMonth ? '$0' : `$${categoryTotal}`}
+                    </div>
+                  </div>
+                  <div className='percentages'>
+                    {isNoEntryForMonth ? '0%' : `${categoryPercentage}%`}
                   </div>
                 </div>
-                <div className='percentages'>{lastFourPercentages[index]}% </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </>
         );
