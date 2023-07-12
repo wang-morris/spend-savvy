@@ -1,6 +1,6 @@
 .container {
   max-width: 50rem;
-  height: 90vh;
+  height: calc(90vh - 4.5rem);
 }
 
 button {
@@ -43,6 +43,14 @@ button:focus {
 
 .title {
   font-size: 1.3rem;
+  text-decoration: none;
+  color: white;
+}
+
+.title:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
 }
 
 .links {
@@ -57,6 +65,11 @@ button:focus {
 
 .links:hover {
   cursor: pointer;
+}
+
+.links a:hover {
+  text-decoration: none;
+  color: #222125;
 }
 
 footer {
@@ -256,6 +269,7 @@ label {
   margin-top: 0.8rem;
   border-radius: 3px;
   box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
+  overflow: auto;
 }
 
 .monthly-pie-chart {
@@ -303,7 +317,9 @@ label {
 }
 
 .empty-table {
-  padding-left: 1rem;
+  padding: 0 1rem;
+  font-size: 0.9rem;
+  font-style: italic;
 }
 
 .list-container {
@@ -454,7 +470,7 @@ select {
   font-size: 0.8rem;
 }
 
-@media (max-width: 650px) {
+@media (max-width: 768px) {
   .links {
     display: none;
   }
@@ -464,7 +480,7 @@ select {
   }
 }
 
-@media (min-width: 650px) {
+@media (min-width: 768px) {
   .header-container {
     height: 3.8rem;
     display: flex;
@@ -498,4 +514,118 @@ select {
   .one-third-card {
     width: 49%;
   }
+}
+
+/* loading and offline visual */
+.lds-facebook {
+  display: inline-block;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+}
+
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 15px;
+  background: #927ae9;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+.snapshot-view-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 2rem;
+  height: 100%;
+  width: 100%;
+}
+
+.snapshot-view-spinner .lds-facebook {
+  position: absolute;
+}
+
+.spending-view-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 4rem;
+  height: 100%;
+  width: 100%;
+}
+
+.spending-view-spinner .lds-facebook {
+  position: absolute;
+}
+
+.category-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 4rem;
+  height: 100%;
+  width: 100%;
+}
+
+.category-spinner .lds-facebook {
+  position: absolute;
+}
+
+.offline-error {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20rem;
+  text-align: center;
+  font-weight: 500;
+  background-color: white;
+  border-radius: 0.3rem;
+  color: rgb(201, 52, 52);
+  padding: 1.5rem 0;
+}
+
+.offline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 }

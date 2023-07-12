@@ -36,7 +36,7 @@ export default class BarGraph extends React.Component {
 
   render() {
     return (
-      <ResponsiveContainer width="95%" height="90%">
+      <ResponsiveContainer width="95%" height="70%">
         <BarChart data={this.state.yearlyData}>
           <XAxis dataKey="month" />
           <YAxis />

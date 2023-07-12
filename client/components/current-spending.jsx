@@ -37,7 +37,7 @@ export default class CurrentSpending extends React.Component {
         {
           (entries.length === 0)
             ? (
-              <div className='empty-table'>Please click the Add button to start tracking!</div>
+              <div className='empty-table'>Recently entered purchases will appear here!</div>
               )
             : (
               <table className='current-spending-table'>

@@ -12,7 +12,8 @@ export default class MonthlyView extends React.Component {
       categoryTotals: [],
       categoryPercentages: [],
       yearlyTotal: 0,
-      yearlyCategoryTotals: []
+      yearlyCategoryTotals: [],
+      isLoading: true
     };
     this.handleMonthClick = this.handleMonthClick.bind(this);
     this.handleYearClick = this.handleYearClick.bind(this);
@@ -53,12 +54,14 @@ export default class MonthlyView extends React.Component {
           categoryPercentages,
           yearlyTotal,
           yearlyCategoryTotals: mappedYearlyCategoryTotals,
-          yearlyCategoryPercentages
+          yearlyCategoryPercentages,
+          isLoading: false
         });
       })
       .catch(err => {
         // eslint-disable-next-line no-console
         console.log(err);
+        this.setState({ isLoading: false });
       });
   }
 
@@ -107,6 +110,76 @@ export default class MonthlyView extends React.Component {
     const commaMonthlyTotal = isNaN(monthlyTotal) ? '0' : monthlyTotal.toLocaleString(undefined, { useGrouping: true });
     const commaYearlyTotal = isNaN(yearlyTotal) ? '0' : yearlyTotal.toLocaleString(undefined, { useGrouping: true });
 
+    const topSpendingContent = this.state.isLoading
+      ? (
+        <div className="spending-view-spinner">
+          <div className="lds-facebook"><div /><div /><div /></div>
+        </div>
+        )
+      : (
+        <>
+          <div className='section-titles month-year-total'>
+            {this.state.monthClicked ? `${currentMonth} Spending` : `${currentYear} Spending`}
+          </div>
+          <div className='section-titles big-number' key={this.state.monthClicked ? 'month' : 'year'}>
+            ${this.state.monthClicked ? commaMonthlyTotal : commaYearlyTotal}
+          </div>
+        </>
+        );
+
+    const categoryContent = this.state.isLoading
+      ? (
+        <div className="category-spinner">
+          <div className="lds-facebook"><div /><div /><div /></div>
+        </div>
+        )
+      : (
+        <>
+          <div className='category-col'>
+            {firstFourCategories.map((categoryName, index) => {
+              const categoryTotal = firstFourTotals[index];
+              const categoryPercentage = firstFourPercentages[index];
+              const isNoEntryForMonth = categoryTotal === undefined;
+
+              return (
+                <div key={categoryName} className='category-item'>
+                  <div className='category-name-container'>
+                    <div className='category-name'>{categoryName}</div>
+                    <div className='category-total'>
+                      {isNoEntryForMonth ? '$0' : `$${categoryTotal}`}
+                    </div>
+                  </div>
+                  <div className='percentages'>
+                    {isNoEntryForMonth ? '0%' : `${categoryPercentage}%`}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className='category-col'>
+            {lastFourCategories.map((categoryName, index) => {
+              const categoryTotal = lastFourTotals[index];
+              const categoryPercentage = lastFourPercentages[index];
+              const isNoEntryForMonth = categoryTotal === undefined;
+
+              return (
+                <div key={categoryName} className='category-item'>
+                  <div className='category-name-container'>
+                    <div className='category-name'>{categoryName}</div>
+                    <div className='category-total'>
+                      {isNoEntryForMonth ? '$0' : `$${categoryTotal}`}
+                    </div>
+                  </div>
+                  <div className='percentages'>
+                    {isNoEntryForMonth ? '0%' : `${categoryPercentage}%`}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </>
+        );
+
     return (
       <div className='body-sections'>
         <div className='one-third-card'>
@@ -125,44 +198,14 @@ export default class MonthlyView extends React.Component {
             </button>
           </div>
           <div className='top-spending-container'>
-            <div className='section-titles month-year-total'>
-              {this.state.monthClicked ? `${currentMonth} Spending` : `${currentYear} Spending`}
-            </div>
-            <div className='section-titles big-number' key={this.state.monthClicked ? 'month' : 'year'}>
-              ${this.state.monthClicked ? commaMonthlyTotal : commaYearlyTotal}
-            </div>
+            {topSpendingContent}
           </div>
         </div>
         <div className='monthly-pie-chart'>
           <div className='category-container'>
             <div className='section-titles'>Spending by Category</div>
             <div className='category-col-container'>
-              <div className='category-col'>
-                {firstFourCategories.map((categoryName, index) => (
-                  <div key={categoryName} className='category-item'>
-                    <div className='category-name-container'>
-                      <div className='category-name'>{categoryName}</div>
-                      <div className='category-total'>
-                        ${firstFourTotals[index]}
-                      </div>
-                    </div>
-                    <div className='percentages'>{firstFourPercentages[index]}%</div>
-                  </div>
-                ))}
-              </div>
-              <div className='category-col'>
-                {lastFourCategories.map((categoryName, index) => (
-                  <div key={categoryName} className='category-item'>
-                    <div className='category-name-container'>
-                      <div className='category-name'>{categoryName}</div>
-                      <div className='category-total'>
-                        ${lastFourTotals[index]}
-                      </div>
-                    </div>
-                    <div className='percentages'>{lastFourPercentages[index]}% </div>
-                  </div>
-                ))}
-              </div>
+              {categoryContent}
             </div>
           </div>
         </div>
