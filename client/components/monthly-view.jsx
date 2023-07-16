@@ -47,16 +47,26 @@ export default class MonthlyView extends React.Component {
         });
         const yearlyCategoryPercentages = this.calculateCategoryPercentages(mappedYearlyCategoryTotals, yearlyTotal);
 
-        this.setState({
-          monthlyTotal,
-          categoryNames,
-          categoryTotals,
-          categoryPercentages,
-          yearlyTotal,
-          yearlyCategoryTotals: mappedYearlyCategoryTotals,
-          yearlyCategoryPercentages,
-          isLoading: false
-        });
+        if (!categoryNames.length) {
+          this.setState({
+            categoryNames: [],
+            categoryTotals: [],
+            categoryPercentages: [],
+            yearlyCategoryTotals: [],
+            yearlyCategoryPercentages: []
+          });
+        } else {
+          this.setState({
+            monthlyTotal,
+            categoryNames,
+            categoryTotals,
+            categoryPercentages,
+            yearlyTotal,
+            yearlyCategoryTotals: mappedYearlyCategoryTotals,
+            yearlyCategoryPercentages,
+            isLoading: false
+          });
+        }
       })
       .catch(err => {
         // eslint-disable-next-line no-console
