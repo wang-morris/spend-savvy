@@ -14,12 +14,14 @@ export default class App extends React.Component {
       offlineError: !navigator.onLine,
       route: parseRoute(window.location.hash),
       entries: [],
-      editEntryId: null
+      editEntryId: null,
+      contentHeight: window.innerHeight
     };
     this.newEntry = this.newEntry.bind(this);
     this.updateEditEntryId = this.updateEditEntryId.bind(this);
     this.updateEditedFrontEnd = this.updateEditedFrontEnd.bind(this);
     this.updateDeletedFrontEnd = this.updateDeletedFrontEnd.bind(this);
+    this.handleResize = this.handleResize.bind(this);
   }
 
   componentDidMount() {
@@ -31,6 +33,8 @@ export default class App extends React.Component {
 
     window.addEventListener('online', this.handleOnline);
     window.addEventListener('offline', this.handleOffline);
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
 
     const entries = JSON.parse(localStorage.getItem('entries')) || [];
     this.setState({ entries });
@@ -39,6 +43,15 @@ export default class App extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('online', this.handleOnline);
     window.removeEventListener('offline', this.handleOffline);
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize() {
+    const headerHeight = document.querySelector('.header-banner').offsetHeight;
+    const footerHeight = document.querySelector('.footer-banner').offsetHeight;
+    const viewportHeight = window.innerHeight;
+
+    this.setState({ contentHeight: viewportHeight - headerHeight - footerHeight });
   }
 
   handleOffline = () => {
@@ -111,7 +124,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { offlineError } = this.state;
+    const { offlineError, contentHeight } = this.state;
 
     return (
       <div className='container'>
@@ -123,7 +136,7 @@ export default class App extends React.Component {
             </div>
           </div>
         )}
-        <div className='content-wrapper'>
+        <div className='content-wrapper' style={{ height: `${contentHeight}px` }}>
           {this.renderPage()}
         </div>
         <Footer />
