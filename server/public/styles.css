@@ -161,7 +161,7 @@ textarea:focus {
   height: 75vh;
   background-color: rgb(228, 228, 228);
   width: 100%;
-  margin-top: 0.8rem;
+  margin: 0.8rem 0;
   border-radius: 3px;
   box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
 }
@@ -266,7 +266,7 @@ label {
   height: 30vh;
   background-color: rgb(228, 228, 228);
   width: 100%;
-  margin-top: 0.8rem;
+  margin: 0.8rem 0;
   border-radius: 3px;
   box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
 }
@@ -278,7 +278,7 @@ label {
   height: 45vh;
   background-color: rgb(228, 228, 228);
   width: 100%;
-  margin-top: 0.8rem;
+  margin: 0.8rem 0;
   border-radius: 3px;
   box-shadow: 3px 3px 5px rgba(104, 101, 101, 0.5);
 }
@@ -517,8 +517,7 @@ select {
   }
 
   .section-subtitles,
-  .list-container,
-  .category-name {
+  .list-container {
     font-size: 1.1rem;
   }
 
@@ -526,35 +525,32 @@ select {
     font-size: 0.9rem;
   }
 
-  .percentages,
-  .category-total {
-    font-size: 1rem;
-  }
-
   .category-item {
     padding: 0.9rem 0;
   }
 
   .current-spending-body {
-    max-height: 37vh;
+    max-height: 40vh;
   }
 
   .two-thirds-card {
     width: 49%;
+    height: 50vh;
   }
 
   .snapshot-view {
     width: 49%;
-    height: 45vh;
+    height: 50vh;
   }
 
   .monthly-category-chart {
     width: 49%;
+    height: 50vh;
   }
 
   .one-third-card {
     width: 49%;
-    height: 45vh;
+    height: 50vh;
   }
 
   .big-number {
