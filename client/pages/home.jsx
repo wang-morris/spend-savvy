@@ -4,7 +4,7 @@ import YearlySnapshot from '../components/yearly-snapshot';
 
 export default function Home(props) {
   return (
-    <div className='container'>
+    <div className='page-container'>
       <div className='body-sections'>
         <CurrentSpending entries={props.entries} updateEditEntryId={props.updateEditEntryId} updateDeletedFrontEnd={props.updateDeletedFrontEnd} />
         <YearlySnapshot />
