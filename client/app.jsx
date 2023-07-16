@@ -123,7 +123,9 @@ export default class App extends React.Component {
             </div>
           </div>
         )}
-        {this.renderPage()}
+        <div className='content-wrapper'>
+          {this.renderPage()}
+        </div>
         <Footer />
       </div>
     );

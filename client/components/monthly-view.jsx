@@ -201,7 +201,7 @@ export default class MonthlyView extends React.Component {
             {topSpendingContent}
           </div>
         </div>
-        <div className='monthly-pie-chart'>
+        <div className='monthly-category-chart'>
           <div className='category-container'>
             <div className='section-titles'>Spending by Category</div>
             <div className='category-col-container'>
