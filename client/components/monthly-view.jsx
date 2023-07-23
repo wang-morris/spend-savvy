@@ -13,7 +13,8 @@ export default class MonthlyView extends React.Component {
       categoryPercentages: [],
       yearlyTotal: 0,
       yearlyCategoryTotals: [],
-      isLoading: true
+      isLoading: true,
+      errorMessage: null
     };
     this.handleMonthClick = this.handleMonthClick.bind(this);
     this.handleYearClick = this.handleYearClick.bind(this);
@@ -70,9 +71,8 @@ export default class MonthlyView extends React.Component {
         }
       })
       .catch(err => {
-        // eslint-disable-next-line no-console
-        console.log(err);
-        this.setState({ isLoading: false });
+        console.error('error:', err);
+        this.setState({ errorMessage: 'An error occurred while fetching data.', isLoading: false });
       });
   }
 
@@ -136,7 +136,10 @@ export default class MonthlyView extends React.Component {
             {this.state.monthClicked ? `${currentMonth} Spending` : `${currentYear} Spending`}
           </div>
           <div className='section-titles big-number' key={this.state.monthClicked ? 'month' : 'year'}>
-            ${this.state.monthClicked ? commaMonthlyTotal : commaYearlyTotal}
+            {this.state.errorMessage
+              ? <div className='error-message'>{this.state.errorMessage}</div>
+              : `$${this.state.monthClicked ? commaMonthlyTotal : commaYearlyTotal}`
+            }
           </div>
         </>
         );

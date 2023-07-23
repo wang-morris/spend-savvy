@@ -20,8 +20,7 @@ export default class YearlySnapshot extends React.Component {
         });
       })
       .catch(err => {
-        // eslint-disable-next-line no-console
-        console.log(err);
+        console.error('error:', err);
         this.setState({ isLoading: false });
       });
   }

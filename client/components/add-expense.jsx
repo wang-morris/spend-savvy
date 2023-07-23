@@ -94,9 +94,8 @@ export default class AddExpense extends React.Component {
         window.location.hash = '#';
       })
       .catch(err => {
-        this.setState({ errorMessage: err.message, isLoading: false });
-        // eslint-disable-next-line no-console
-        console.log('error:', err);
+        this.setState({ errorMessage: 'An unexpected error has occurred.', isLoading: false });
+        console.error('error:', err);
       });
 
   }
