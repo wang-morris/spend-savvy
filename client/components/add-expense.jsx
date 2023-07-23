@@ -31,9 +31,18 @@ export default class AddExpense extends React.Component {
 
     this.setState({ isLoading: true });
 
+    const numberRegex = /^\d*\.?\d*$/;
+    if (!numberRegex.test(this.state.amount)) {
+      this.setState({ errorMessage: 'Please only enter valid number characters.', isLoading: false });
+      return;
+    }
+
     const amountRegex = /^\d+(\.\d{1,2})?$/;
-    if (!amountRegex.test(this.state.amount)) {
-      this.setState({ errorMessage: 'Please enter a valid number with up to two decimal places.' });
+    let correctedAmount = this.state.amount.startsWith('.') ? `0${this.state.amount}` : this.state.amount;
+    correctedAmount = parseFloat(correctedAmount).toFixed(2);
+
+    if (!amountRegex.test(correctedAmount)) {
+      this.setState({ errorMessage: 'Please enter a valid number with up to two decimal places.', isLoading: false });
       return;
     }
 
@@ -59,7 +68,7 @@ export default class AddExpense extends React.Component {
         typeId: typeMap[this.state.typeId],
         userId: this.state.userId,
         item: this.state.item,
-        amount: this.state.amount,
+        amount: correctedAmount,
         dateOfExpense: this.state.createdAt
       })
     })

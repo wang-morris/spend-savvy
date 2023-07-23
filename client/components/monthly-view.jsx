@@ -53,7 +53,8 @@ export default class MonthlyView extends React.Component {
             categoryTotals: [],
             categoryPercentages: [],
             yearlyCategoryTotals: [],
-            yearlyCategoryPercentages: []
+            yearlyCategoryPercentages: [],
+            isLoading: false
           });
         } else {
           this.setState({
@@ -117,9 +118,12 @@ export default class MonthlyView extends React.Component {
     const firstFourPercentages = displayCategoryPercentages.slice(0, 4);
     const lastFourPercentages = displayCategoryPercentages.slice(4);
 
-    const commaMonthlyTotal = isNaN(monthlyTotal) ? '0' : monthlyTotal.toLocaleString(undefined, { useGrouping: true });
-    const commaYearlyTotal = isNaN(yearlyTotal) ? '0' : yearlyTotal.toLocaleString(undefined, { useGrouping: true });
-
+    const commaMonthlyTotal = isNaN(monthlyTotal)
+      ? '0.00'
+      : new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(monthlyTotal);
+    const commaYearlyTotal = isNaN(yearlyTotal)
+      ? '0.00'
+      : new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(yearlyTotal);
     const topSpendingContent = this.state.isLoading
       ? (
         <div className="spending-view-spinner">
