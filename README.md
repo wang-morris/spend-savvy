@@ -66,10 +66,27 @@ Try the application live at [https://spend-savvy.herokuapp.com/]
    ```shell
     npm install
     ```
-3. Start the PostgreSQL database.
+
+3. Make a copy of the .env.example file.
+
+    ```shell
+    cp .env.example .env
+    ```
+4. Start the PostgreSQL database.
 
     ```shell
     sudo service postgresql start
+    ```
+4. Create the database name.
+
+    ```shell
+    createdb spendSavvy
+    ```
+
+5. Import the database schema.
+
+    ```shell
+    npm run db:import
     ```
 
 5. Start the application. Once started, you can view the application by opening http://localhost:3000 in your browser.
