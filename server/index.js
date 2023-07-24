@@ -72,6 +72,11 @@ app.post('/api/entries', (req, res, next) => {
 app.put('/api/entries/:entryId', (req, res, next) => {
   const { typeId, userId, item, amount } = req.body;
   const entryId = parseInt(req.params.entryId);
+
+  if (!validateAmount(amount)) {
+    throw new ValidationError('Amount must be a whole number or up to two decimal places.');
+  }
+
   const sql = `
     update "entries"
     set "typeId" = $1, "userId" = $2, "item" = $3, "amount" = $4

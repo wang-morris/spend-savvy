@@ -46,8 +46,7 @@ export default class EditExpense extends React.Component {
         window.location.hash = '#';
       })
       .catch(err => {
-        // eslint-disable-next-line no-console
-        console.log('error:', err);
+        console.error('error:', err);
       });
   }
 
@@ -97,8 +96,8 @@ export default class EditExpense extends React.Component {
         window.location.hash = '#';
       })
       .catch(err => {
-        // eslint-disable-next-line no-console
-        console.log('error:', err);
+        console.error('error:', err);
+        this.setState({ errorMessage: 'An unexpected error has occurred.' });
       });
   }
 

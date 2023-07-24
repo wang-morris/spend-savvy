@@ -5,7 +5,8 @@ export default class BarGraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      yearlyData: this.getDefaultData()
+      yearlyData: this.getDefaultData(),
+      errorMessage: null
     };
   }
 
@@ -24,8 +25,8 @@ export default class BarGraph extends React.Component {
 
       })
       .catch(err => {
-        // eslint-disable-next-line no-console
-        console.log(err);
+        console.error('error:', err);
+        this.setState({ errorMessage: 'An error occurred while fetching data.' });
       });
   }
 
@@ -41,7 +42,10 @@ export default class BarGraph extends React.Component {
           <XAxis dataKey="month" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="spending" fill="#8884d8"/>
+          {this.state.errorMessage
+            ? <text x={0} y={0} dx={90} dy={75} fontSize={12} fill="red">{this.state.errorMessage}</text>
+            : <Bar dataKey="spending" fill="#8884d8" />
+          }
         </BarChart>
       </ResponsiveContainer>
     );

@@ -1,0 +1,425 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  max-width: 50rem;
+}
+
+.section-titles {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 1rem;
+  margin-bottom: -1.5rem;
+}
+
+.section-subtitles {
+  font-size: 1rem;
+  font-weight: 500;
+  padding-left: 1rem;
+}
+
+/* header */
+.header-banner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4rem;
+  z-index: -1;
+}
+
+.header-container {
+  height: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.links {
+  display: flex;
+  width: 12rem;
+  justify-content: space-between;
+}
+
+/* footer */
+footer {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-banner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4rem;
+  z-index: -1;
+}
+
+.footer-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+}
+
+.footer-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-button p {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+/* home page */
+.two-thirds-card {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: 45vh;
+  width: 100%;
+  margin: 0.8rem 0;
+}
+
+.current-text {
+  padding: 1rem;
+  width: 100%;
+}
+
+.current-spending-table {
+  width: 98%;
+}
+
+.current-spending-body {
+  display: block;
+  overflow-y: auto;
+  max-height: 37vh;
+}
+
+.current-spending-body::-webkit-scrollbar {
+  width: 3px;
+}
+
+.current-card {
+  padding-bottom: 1.5rem;
+}
+
+.empty-table {
+  padding: 0 1rem;
+}
+
+.list-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1rem;
+  padding-right: 0.3rem;
+}
+
+.list-category {
+  margin-top: -0.2rem;
+}
+
+.snapshot-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  height: 30vh;
+  width: 100%;
+  margin: 0.8rem 0;
+}
+
+/* add expense page */
+.add-view {
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  width: 100%;
+  margin: 0.8rem 0;
+}
+
+label {
+  margin: 0;
+}
+
+.form {
+  font-size: 0.9rem;
+  padding: 1.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-footer {
+  position: relative;
+  bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: auto;
+  padding: 2rem;
+}
+
+.form-buttons {
+  font-size: 0.9rem;
+  height: 2.5rem;
+  width: 12rem;
+  margin: 0.3rem;
+}
+
+/* delete item modal */
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+.modal-container {
+  padding: 5% 10%;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+}
+
+.modal-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 12rem;
+  margin: auto;
+}
+
+.modal-button-confirm {
+  height: 2.5rem;
+  width: 5.5rem;
+  margin: 0.5rem;
+}
+
+.modal-button-deny {
+  height: 2.5rem;
+  width: 5.5rem;
+  margin: 0.5rem;
+}
+
+/* total spending page */
+.month-year-buttons {
+  padding: 0.7rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.month-year-style {
+  padding: 0.6rem;
+}
+
+.top-spending-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+}
+
+.month-year-total {
+  margin-bottom: -2rem;
+}
+
+.one-third-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 30vh;
+  width: 100%;
+  margin: 0.8rem 0;
+}
+
+.monthly-category-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 45vh;
+  width: 100%;
+  margin: 0.8rem 0;
+}
+
+.category-container {
+  width: 100%;
+  height: 90%;
+}
+
+.category-col-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.category-col {
+  width: 45%;
+  display: block;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.category-item {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+
+/* loading and offline visual */
+.lds-facebook {
+  display: inline-block;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 15px;
+}
+
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+}
+
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+}
+
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+}
+
+.snapshot-view-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 2rem;
+  height: 100%;
+  width: 100%;
+}
+
+.snapshot-view-spinner .lds-facebook {
+  position: absolute;
+}
+
+.spending-view-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 4rem;
+  height: 100%;
+  width: 100%;
+}
+
+.spending-view-spinner .lds-facebook {
+  position: absolute;
+}
+
+.category-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  top: 4rem;
+  height: 100%;
+  width: 100%;
+}
+
+.category-spinner .lds-facebook {
+  position: absolute;
+}
+
+.offline-error {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  width: 20rem;
+  padding: 1.5rem 0;
+}
+
+.offline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+}
+
+/* media queries */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-grow: 1;
+    overflow-y: scroll;
+    padding-right: 0.4rem;
+    box-sizing: border-box;
+  }
+}
+
+@media (min-width: 768px) {
+  .header-container {
+    height: 3.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .body-sections {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .category-item {
+    padding: 0.9rem 0;
+  }
+
+  .current-spending-body {
+    max-height: 40vh;
+  }
+
+  .two-thirds-card,
+  .snapshot-view,
+  .monthly-category-chart,
+  .one-third-card {
+    width: 49%;
+    height: 50vh;
+  }
+}
